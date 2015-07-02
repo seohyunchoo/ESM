@@ -21,6 +21,9 @@ public class Plugin extends Aware_Plugin {
     private AlarmManager alarmManager;
     private final int morningIntentRC = 123123; //request code for next bid
     private PendingIntent morningIntent = null;
+    private PendingIntent noonIntent = null;
+    private PendingIntent afternoonIntent = null;
+    private PendingIntent eveningIntent = null;
 
     @Override
     public void onCreate() {
@@ -36,33 +39,41 @@ public class Plugin extends Aware_Plugin {
         esm_filter.addAction(ESM.ACTION_AWARE_ESM_ANSWERED);
         registerReceiver(esm_statuses, esm_filter);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        scheduleMorningQuestionnaire();
+        scheduleQuestionnaire();
 
     }
 
-    private void scheduleMorningQuestionnaire() {
+    private void scheduleQuestionnaire() {
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR,1);
         cal.set(Calendar.HOUR_OF_DAY, 9);
         cal.set(Calendar.MINUTE, 00);
         cal.set(Calendar.SECOND, 00);
         Calendar cal2 = Calendar.getInstance();
+        cal2.add(Calendar.DAY_OF_YEAR,1);
         cal2.set(Calendar.HOUR_OF_DAY,13);
-        cal2.set(Calendar.MINUTE,00);
+        cal2.set(Calendar.MINUTE, 00);
         cal2.set(Calendar.SECOND, 00);
         Calendar cal3 = Calendar.getInstance();
-        cal3.set(Calendar.HOUR_OF_DAY,17);
+        cal3.add(Calendar.DAY_OF_YEAR,1);
+        cal3.set(Calendar.HOUR_OF_DAY,17 );
         cal3.set(Calendar.MINUTE,00);
         cal3.set(Calendar.SECOND,00);
         Calendar cal4 = Calendar.getInstance();
+        cal4.add(Calendar.DAY_OF_YEAR,1);
         cal4.set(Calendar.HOUR_OF_DAY,21);
         cal4.set(Calendar.MINUTE,00);
         cal4.set(Calendar.SECOND,00);
         morningIntent = PendingIntent.getBroadcast(getApplicationContext(), morningIntentRC, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY ,morningIntent);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal2.getTimeInMillis(), AlarmManager.INTERVAL_DAY, morningIntent);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal3.getTimeInMillis(), AlarmManager.INTERVAL_DAY, morningIntent);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal4.getTimeInMillis(), AlarmManager.INTERVAL_DAY, morningIntent);
+        noonIntent = PendingIntent.getBroadcast(getApplicationContext(),123124, alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        afternoonIntent = PendingIntent.getBroadcast(getApplicationContext(),123125, alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        eveningIntent = PendingIntent.getBroadcast(getApplicationContext(),123126, alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), morningIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal2.getTimeInMillis(), noonIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal3.getTimeInMillis(), afternoonIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal4.getTimeInMillis(), eveningIntent);
         Log.d(TAG, "Set get next bid alarm for :" + cal.getTimeInMillis() + " " + cal2.getTimeInMillis() +
                 " " + cal3.getTimeInMillis() + " " + cal4.getTimeInMillis());
     }
@@ -100,11 +111,11 @@ public class Plugin extends Aware_Plugin {
 
 
             if (intent.getAction().equals(ESM.ACTION_AWARE_ESM_EXPIRED)) {
-                //scheduleMorningQuestionnaire();
+                scheduleQuestionnaire();
             } else if (intent.getAction().equals(ESM.ACTION_AWARE_ESM_DISMISSED)) {
-                //scheduleMorningQuestionnaire();
+                scheduleQuestionnaire();
             } else if (intent.getAction().equals(ESM.ACTION_AWARE_ESM_ANSWERED)) {
-                //scheduleMorningQuestionnaire();
+                scheduleQuestionnaire();
             }
         }
     }
