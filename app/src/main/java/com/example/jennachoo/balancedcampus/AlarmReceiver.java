@@ -3,6 +3,9 @@ package com.example.jennachoo.balancedcampus;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Vibrator;
+
+import com.example.jennachoo.balancedcampus.Plugin;
 
 import com.aware.ESM;
 
@@ -51,6 +54,9 @@ public class AlarmReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent){
+        Vibrator vibrator = (Vibrator) context
+                .getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(2000);
         Intent queue_esm = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);
         String esmJSON  = MORNINGJSON;
         queue_esm.putExtra(ESM.EXTRA_ESM, esmJSON);
