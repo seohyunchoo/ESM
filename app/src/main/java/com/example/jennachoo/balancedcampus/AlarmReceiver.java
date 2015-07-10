@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
 
-import com.example.jennachoo.balancedcampus.Plugin;
+
 
 import com.aware.ESM;
 
