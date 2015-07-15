@@ -34,14 +34,37 @@ public class Plugin extends Aware_Plugin {
     public void scheduleQuestionnaire() {
         Intent alarmIntent = new Intent(this,AlarmReceiver.class);
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DAY_OF_YEAR, 0);
-        cal.set(Calendar.HOUR_OF_DAY, 17);
-        cal.set(Calendar.MINUTE, 00);
-        cal.set(Calendar.SECOND, 00);
+        if(cal.get(Calendar.HOUR_OF_DAY) < 9){
+            cal.add(Calendar.DAY_OF_YEAR, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 9);
+            cal.set(Calendar.MINUTE, 00);
+            cal.set(Calendar.SECOND, 00);
+        } else if (cal.get(Calendar.HOUR_OF_DAY) < 13){
+            cal.add(Calendar.DAY_OF_YEAR, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 13);
+            cal.set(Calendar.MINUTE, 00);
+            cal.set(Calendar.SECOND, 00);
+        } else if (cal.get(Calendar.HOUR_OF_DAY) < 17){
+            cal.add(Calendar.DAY_OF_YEAR, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 17);
+            cal.set(Calendar.MINUTE, 00);
+            cal.set(Calendar.SECOND, 00);
+        } else if (cal.get(Calendar.HOUR_OF_DAY) < 21){
+            cal.add(Calendar.DAY_OF_YEAR, 0);
+            cal.set(Calendar.HOUR_OF_DAY, 21);
+            cal.set(Calendar.MINUTE, 00);
+            cal.set(Calendar.SECOND, 00);
+        } else {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            cal.set(Calendar.HOUR_OF_DAY, 9);
+            cal.set(Calendar.MINUTE, 00);
+            cal.set(Calendar.SECOND, 00);
+        }
         morningIntent = PendingIntent.getBroadcast(getApplicationContext(),123123,
                 alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), morningIntent);
         Log.d(TAG, "Alarm 1 :" + cal.getTimeInMillis());
+
     }
 
     @Override
