@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'How have you been feeling the past few hours?'," +
             "'esm_radios':['happy','sad','neutral','irritated/angry/frustrated', confused']," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threashold': 300," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String TWO = "{'esm':{" +
