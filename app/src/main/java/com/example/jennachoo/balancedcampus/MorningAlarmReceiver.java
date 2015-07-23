@@ -8,12 +8,12 @@ import android.content.Intent;
 import android.os.Vibrator;
 import android.util.Log;
 
-
 import com.aware.ESM;
 
 import java.util.Calendar;
 
-public class AlarmReceiver extends BroadcastReceiver{
+
+public class MorningAlarmReceiver extends BroadcastReceiver {
     private static final String ONE = "{'esm':{" +
             "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
             "'esm_title': 'Balanced Campus'," +
@@ -50,52 +50,34 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_expiration_threashold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
-    private static final String FIVE2 = "{'esm':{" +
-            "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
-            "'esm_title': 'Balanced Campus'," +
-            "'esm_instructions': 'Did you sleep in the past few hours?'," +
-            "'esm_radios':['Yes', 'No']," +
-            "'esm_submit': 'Submit'," +
-            "'esm_expiration_threashold': 60," +
-            "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
-            "}}";
 
     private static final String FIVE = "{'esm':{" +
             "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
             "'esm_title': 'Balanced Campus'," +
-            "'esm_instructions': 'What time did you go to bed?'," +
-            "'esm_radios':['10:00pm - 11:00pm', '11:00pm - 12:00am', '12:00am - 1:00am', '1:00am - 2:00am', 'Other', 'I did not sleep']," +
+            "'esm_instructions': 'What was your workload the past few hours?'," +
+            "'esm_radios':['1 (not at all)', '2 (a little)', '3 (so so)', '4 (a lot)', '5 (very much/extensive)' ]," +
             "'esm_submit': 'Next'," +
             "'esm_expiration_threashold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
+
     private static final String SIX = "{'esm':{" +
             "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
             "'esm_title': 'Balanced Campus'," +
-            "'esm_instructions': 'What time did you get up?'," +
-            "'esm_radios':['6:00am - 7:00am', '7:00am - 8:00am', '8:00am - 9:00am', '9:00am - 10:00am', 'Other', 'I did not sleep']," +
-            "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
-            "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
-            "}}";
-    private static final String SEVEN = "{'esm':{" +
-            "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
-            "'esm_title': 'Balanced Campus'," +
-            "'esm_instructions': 'How well did you sleep?'," +
-            "'esm_radios':['1 (very well)', '2 (well)', '3 (ok)', '4 (bad)', '5 (very bad)', 'N/A' ]," +
+            "'esm_instructions': 'What was your workload the past few hours?'," +
+            "'esm_radios':['1 (not at all)', '2 (a little)', '3 (so so)', '4 (a lot)', '5 (very much/extensive)' ]," +
             "'esm_submit': 'Submit'," +
             "'esm_expiration_threashold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
 
-    private static final String NOTMORNINGJSON = "[" + ONE + "," + TWO + "," +  THREE + "," +
-            FOUR + "," + FIVE2 +"]";
-    private static final String MORNINGJSON = "[" + ONE + "," + TWO + "," +  THREE + "," +
-            FOUR + "," + FIVE + "," + SIX + "," + SEVEN + "]";
+
+    private static final String MORNINGJSON = "[" + ONE + "," + TWO + "," +
+            THREE + "," +  FOUR + "," + FIVE + "," + SIX + "]";
     private PendingIntent nextIntent;
     private AlarmManager alarmManager;
 
-    public AlarmReceiver() {
+    public MorningAlarmReceiver() {
     }
 
     public void scheduleNextQuestionnaire(Context context) {
@@ -126,13 +108,7 @@ public class AlarmReceiver extends BroadcastReceiver{
                 .getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(2000);
         Intent queue_esm = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);
-        String esmJSON;
-        Calendar currCal = Calendar.getInstance();
-        if (currCal.get(Calendar.HOUR_OF_DAY) < 10) {
-            esmJSON  = MORNINGJSON;
-        } else {
-            esmJSON  = NOTMORNINGJSON;
-        }
+        String esmJSON  = MORNINGJSON;
         queue_esm.putExtra(ESM.EXTRA_ESM, esmJSON);
         context.sendBroadcast(queue_esm);
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
