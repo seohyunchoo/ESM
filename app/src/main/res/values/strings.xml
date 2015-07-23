@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="aware_esm_other">Other</string>
-<string name="aware_esm_other_follow">Can you be more specific, please?</string>
+    <string name="app_name">BalancedCampus</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
