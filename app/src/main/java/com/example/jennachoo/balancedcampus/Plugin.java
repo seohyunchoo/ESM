@@ -70,14 +70,14 @@ public class Plugin extends Aware_Plugin {
     /*public void scheduleQuestionnaire(){
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY,14);
-        cal.set(Calendar.MINUTE, 19);
+        cal.set(Calendar.HOUR_OF_DAY,12);
+        cal.set(Calendar.MINUTE, 51);
         morningIntent = PendingIntent.getBroadcast(getApplicationContext(),123123,
                 alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), morningIntent);
         Log.d(TAG, "Alarm 1 :" + cal.getTimeInMillis());
     }
-*/
+ */
     @Override
     public void onDestroy() {
         super.onDestroy();

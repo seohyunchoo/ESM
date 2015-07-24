@@ -20,7 +20,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'How have you been feeling the past few hours?'," +
             "'esm_radios':['happy','sad','neutral','irritated/angry/frustrated', confused']," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 300," +
+            "'esm_expiration_threshold': 300," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String TWO = "{'esm':{" +
@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'How energetic have you been the past few hours?'," +
             "'esm_radios':['1 (not at all)', '2 (a little)', '3 (so so)', '4 (a lot)', '5 (very much/extensive)' ]," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String THREE = "{'esm':{" +
@@ -38,7 +38,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'How productive have you been the past few hours?'," +
             "'esm_radios':['1 (not at all)', '2 (a little)', '3 (so so)', '4 (a lot)', '5 (very much/extensive)' ]," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String FOUR = "{'esm':{" +
@@ -47,7 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'What was your workload the past few hours?'," +
             "'esm_radios':['1 (not at all)', '2 (a little)', '3 (so so)', '4 (a lot)', '5 (very much/extensive)' ]," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String FIVE2 = "{'esm':{" +
@@ -56,7 +56,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'Did you sleep in the past few hours?'," +
             "'esm_radios':['Yes', 'No']," +
             "'esm_submit': 'Submit'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
 
@@ -66,16 +66,16 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'What time did you go to bed?'," +
             "'esm_radios':['9PM','10PM','11PM','12AM','1AM','2AM','3AM','4AM','5AM','6AM','7AM','8AM','9AM','I did not sleep last night']," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String SIX = "{'esm':{" +
             "'esm_type':" + ESM.TYPE_ESM_RADIO + "," +
             "'esm_title': 'Balanced Campus'," +
             "'esm_instructions': 'What time did you get up?'," +
-            "'esm_radios':['9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM','6PM','7PM','8PM','9PM','I did not sleep last night']," +
+            "'esm_radios':['6AM','7AM','8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM','6PM','I did not sleep last night']," +
             "'esm_submit': 'Next'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
     private static final String SEVEN = "{'esm':{" +
@@ -84,7 +84,7 @@ public class AlarmReceiver extends BroadcastReceiver{
             "'esm_instructions': 'How well did you sleep?'," +
             "'esm_radios':['very bad','bad','ok','well','very well']," +
             "'esm_submit': 'Submit'," +
-            "'esm_expiration_threashold': 60," +
+            "'esm_expiration_threshold': 60," +
             "'esm_trigger': 'com.example.jennachoo.balancedcampus'" +
             "}}";
 
@@ -119,7 +119,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), nextIntent);
         Log.d("ALARMRECEIVER", "Next Alarm:" + cal.getTimeInMillis());
     }
-  /*  public void scheduleNextQuestionnaire(Context context){
+    /*public void scheduleNextQuestionnaire(Context context){
         Intent alarmIntent = new Intent(context, AlarmReceiver.class);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE,3);
@@ -137,7 +137,7 @@ public class AlarmReceiver extends BroadcastReceiver{
         Intent queue_esm = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);
         String esmJSON;
         Calendar currCal = Calendar.getInstance();
-        if(currCal.get(Calendar.MINUTE) < 25) {
+        if(currCal.get(Calendar.HOUR_OF_DAY) < 13) {
             esmJSON = MORNINGJSON;
         } else {
             esmJSON = NOTMORNINGJSON;
@@ -156,12 +156,11 @@ public class AlarmReceiver extends BroadcastReceiver{
         Intent queue_esm = new Intent(ESM.ACTION_AWARE_QUEUE_ESM);
         String esmJSON;
         Calendar currCal = Calendar.getInstance();
-        /*if (currCal.get(Calendar.HOUR_OF_DAY) < 10) {
+        if (currCal.get(Calendar.HOUR_OF_DAY) < 10) {
             esmJSON  = MORNINGJSON;
         } else {
             esmJSON  = NOTMORNINGJSON;
-        }*/
-        esmJSON = MORNINGJSON;
+        }
         queue_esm.putExtra(ESM.EXTRA_ESM, esmJSON);
         context.sendBroadcast(queue_esm);
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
