@@ -30,7 +30,6 @@ public class Plugin extends Aware_Plugin {
         DEBUG = Aware.getSetting(this, Aware_Preferences.DEBUG_FLAG).equals("true");
     }
 
-
     public void scheduleQuestionnaire() {
         Intent alarmIntent = new Intent(this,AlarmReceiver.class);
         Calendar cal = Calendar.getInstance();
